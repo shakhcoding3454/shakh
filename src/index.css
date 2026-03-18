@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fredoka", sans-serif;
+  
+  --color-brand-blue: #4A90E2;
+  --color-brand-light-blue: #E1F5FE;
+  --color-brand-orange: #FF8A65;
+  --color-brand-yellow: #FFD54F;
+  --color-brand-green: #81C784;
+}
+
+@layer base {
+  body {
+    @apply bg-[#F5F9FF] text-slate-800 font-sans antialiased;
+  }
+}
+
+.glass-card {
+  @apply bg-white/90 backdrop-blur-sm border border-white/20 shadow-xl;
+}
+
+.soft-shadow {
+  box-shadow: 0 12px 40px rgba(74, 144, 226, 0.12);
+}
+
+.btn-3d {
+  @apply relative active:translate-y-[2px] transition-all duration-75 border-b-4;
+}
+
+.btn-3d:active {
+  @apply border-b-0;
+}
+
+.card-3d {
+  @apply border-b-4 border-slate-200/50 rounded-[32px] bg-white;
+}
+
+.mobile-container {
+  @apply max-w-md mx-auto min-h-screen bg-[#F5F9FF] relative overflow-hidden flex flex-col shadow-2xl;
+}
+
+.header-wave {
+  clip-path: ellipse(100% 60% at 50% 30%);
+}
+
+.subject-card {
+  @apply aspect-square rounded-[20px] flex flex-col items-center justify-center gap-1 shadow-lg border-b-4 transition-transform active:scale-95;
+}
+
+.task-item {
+  @apply flex items-center gap-3 p-3 border-b border-slate-50 last:border-b-0;
+}

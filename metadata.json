@@ -1,0 +1,7 @@
+{
+  "name": "SmartBook - Interaktiv Ta'lim",
+  "description": "Bolalar uchun interaktiv kitoblar, audio darsliklar va qiziqarli vazifalar platformasi.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
