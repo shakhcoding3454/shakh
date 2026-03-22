@@ -109,7 +109,7 @@ export const Tests: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto pb-24 px-6 pt-12">
+    <div className="flex-1 overflow-y-auto pb-24 px-6 pt-12 bg-[#F5F9FF]">
       <h1 className="text-2xl font-display font-bold text-slate-800 tracking-wide mb-8">Testlar va Vazifalar</h1>
 
       <div className="flex bg-slate-100 p-1.5 rounded-2xl mb-8">
@@ -250,6 +250,20 @@ export const Tests: React.FC = () => {
                 </div>
               </div>
               
+              {assignment.status === 'Tekshirilmoqda' && assignment.type === 'audio' && (
+                <div className="mt-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                  <div className="flex items-center gap-3">
+                    <button className="w-10 h-10 bg-brand-blue rounded-xl flex items-center justify-center text-white shadow-lg">
+                      <Play className="w-4 h-4 fill-white" />
+                    </button>
+                    <div className="flex-1 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                      <div className="h-full bg-brand-blue w-1/3" />
+                    </div>
+                    <span className="text-[10px] font-bold text-slate-400">0:45 / 2:30</span>
+                  </div>
+                </div>
+              )}
+
               {assignment.status === 'Yangi' && (
                 assignment.type === 'speaking' ? (
                   <div className="space-y-4">
