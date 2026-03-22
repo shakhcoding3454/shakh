@@ -32,6 +32,9 @@ export const Library: React.FC<LibraryProps> = ({
   const [search, setSearch] = useState('');
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [activeCategory, setActiveCategory] = useState(initialCategory);
+  const [sortBy, setSortBy] = useState<'title' | 'author'>('title');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   React.useEffect(() => {
     setActiveCategory(initialCategory);
@@ -63,10 +66,17 @@ export const Library: React.FC<LibraryProps> = ({
 
   const allBooks = [...customBooks, ...defaultBooks];
 
-  const filteredBooks = allBooks.filter(b => 
-    (activeCategory === 'Barchasi' || b.category === activeCategory) &&
-    b.title.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredBooks = allBooks
+    .filter(b => 
+      (activeCategory === 'Barchasi' || b.category === activeCategory) &&
+      b.title.toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) => {
+      const valA = a[sortBy].toLowerCase();
+      const valB = b[sortBy].toLowerCase();
+      if (sortOrder === 'asc') return valA > valB ? 1 : -1;
+      return valA < valB ? 1 : -1;
+    });
 
   const categoryColors: { [key: string]: string } = {
     'Barchasi': 'bg-brand-blue border-blue-700',
@@ -81,12 +91,40 @@ export const Library: React.FC<LibraryProps> = ({
       <div className="p-6 pt-12">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-display font-black text-slate-800 tracking-tight">Kutubxona 📚</h1>
-          <motion.div 
-            whileTap={{ scale: 0.9 }}
-            className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-md border border-slate-100"
-          >
-            <Filter className="w-5 h-5 text-brand-blue" />
-          </motion.div>
+          <div className="relative">
+            <motion.button 
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              className={cn(
+                "w-10 h-10 rounded-xl flex items-center justify-center shadow-md border transition-all",
+                isFilterOpen ? "bg-brand-blue text-white border-blue-700" : "bg-white text-brand-blue border-slate-100"
+              )}
+            >
+              <Filter className="w-5 h-5" />
+            </motion.button>
+
+            {isFilterOpen && (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 z-50 p-2"
+              >
+                <div className="p-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">Saralash</div>
+                <button 
+                  onClick={() => { setSortBy('title'); setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc'); setIsFilterOpen(false); }}
+                  className="w-full text-left px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-50 rounded-xl flex items-center justify-between"
+                >
+                  Nomi bo'yicha {sortBy === 'title' && (sortOrder === 'asc' ? '↑' : '↓')}
+                </button>
+                <button 
+                  onClick={() => { setSortBy('author'); setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc'); setIsFilterOpen(false); }}
+                  className="w-full text-left px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-50 rounded-xl flex items-center justify-between"
+                >
+                  Muallif bo'yicha {sortBy === 'author' && (sortOrder === 'asc' ? '↑' : '↓')}
+                </button>
+              </motion.div>
+            )}
+          </div>
         </div>
 
         <div className="relative mb-8">
